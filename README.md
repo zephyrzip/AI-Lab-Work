@@ -1,4 +1,4 @@
-# AI Lab (CSE 3171) — Day 1 to Day 8 solutions
+# AI Lab (CSE 3171) — Day 1 to Day 10 solutions
 
 Every file contains the **common part plus all three groups'** problems, with test
 cases written as comments (as the lab notes require).
@@ -13,6 +13,8 @@ cases written as comments (as the lab notes require).
 | `day6_numbers_lists.lisp` | 6 — Numbers & lists | Common Lisp |
 | `day7_arrays_lists.lisp` | 7 — Arrays & lists | Common Lisp |
 | `day8_puzzles.lisp` | 8 — Puzzles | Common Lisp |
+| `day9_lean_recursion_lists.lean` | 9 — Functional recursion & lists | Lean 4 |
+| `day10_lean_family.lean` | 10 — Family relations | Lean 4 |
 
 ## Running the Prolog files
 
@@ -43,7 +45,16 @@ For Days 7 and 8, create the sample array first:
 > (setq myarr (make-array 5 :initial-contents '(10 20 30 40 50)))
 ```
 
-## Notes on two places where the question paper and the plain definition disagree
+## Running the Lean files
+
+Easiest: open <https://live.lean-lang.org>, paste the file, and read the
+`#eval` results in the right-hand panel. Offline: install `elan`, then use the
+"Lean 4" VS Code extension and open the `.lean` file. No mathlib is needed.
+
+Each `#eval` line has its expected value as a comment beside it. A red squiggle
+means a type or syntax error at that spot.
+
+## Notes on places where the question paper and the plain definition disagree
 
 * **Day 1, Group 2 — Aunt.** Geeta is Rani's aunt *by marriage* (she is married to
   Rani's mother's brother), not a blood sibling of a parent, so `aunt/2` has a
@@ -58,3 +69,18 @@ For Days 7 and 8, create the sample array first:
 * **Day 8, Group 2 — Near palindrome.** `(1 2 3 2 9)` differs from its reverse at
   two *positions* but only one *pair*, so the check allows up to two differing
   positions.
+* **Day 9 — "average".** Lean's `/` on `Nat` is integer division. For `nums` the
+  average is exactly 40 / 8 = 5, so the tests match the sheet; for other lists
+  the average is rounded down.
+* **Day 9 — function shape.** Each `countMatchingN`, `sumMatchingN`,
+  `listMatchingN` takes the list as an argument, so call them as
+  `#eval countMatching1 nums`. They are all built from three small recursive
+  helpers (`countIf`, `sumIf`, `keepIf`) that pattern-match on `[]` / `x :: xs`.
+* **Day 10 — aunts/uncles.** The parent list has no marriage data, so
+  aunts/uncles are *blood* relations only (a sibling of a parent). This is why
+  `countAuntsOrUncles "rani"` is 1 (Arjun) and not 2 (Geeta is not counted), which
+  is exactly what the sheet's expected answer says.
+* **Day 10 — `allPeople`.** Lean has no Prolog-style "find any Z", so the file
+  builds a duplicate-free list of everyone (`allPeople`) and searches it with
+  `any` / `filter`.
+
